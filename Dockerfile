@@ -79,7 +79,7 @@ RUN \
 \
     Write-Host 'Installing Python...'; \
     Invoke-WebRequest \
-        -Uri 'https://www.python.org/ftp/python/3.10.4/python-3.10.4-amd64.exe' \
+        -Uri 'https://www.python.org/ftp/python/3.12.5/python-3.12.5-amd64.exe' \
         -OutFile 'python-installer.exe'; \
     Start-Process -Wait -NoNewWindow \
         -FilePath 'python-installer.exe' \
@@ -91,7 +91,6 @@ RUN \
     Start-Process -Wait -NoNewWindow \
         -FilePath 'pip' \
         -ArgumentList 'install --no-cache-dir conan==1.48.1'; \
-    Remove-Item \"$env:LOCALAPPDATA/pip\" -Recurse -Force; \
     Start-Process -Wait -NoNewWindow \
         -FilePath 'conan' \
         -ArgumentList 'config init'; \
