@@ -13,7 +13,11 @@ RUN \
             '--add Microsoft.VisualStudio.Component.VC.14.32.17.2.x86.x64', \
             '--add Microsoft.VisualStudio.Component.Windows10SDK.19041', \
             '--quiet', '--wait', '--norestart', '--nocache'; \
-    Remove-Item -Path 'vs_buildtools.exe', \"$env:TEMP/*\" -Recurse -Force;
+    Remove-Item -Path 'vs_buildtools.exe', \"$env:TEMP/*\" -Recurse -Force; \
+    New-Item \
+        -Path 'C:/BuildTools' \
+        -ItemType SymbolicLink \
+        -Value \"${env:ProgramFiles(x86)}/Microsoft Visual Studio/2022/BuildTools\"
 
 # Updating utilities should't change the mtime of the VC
 RUN \
