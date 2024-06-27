@@ -12,7 +12,6 @@ RUN \
             # https://docs.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-build-tools
             '--add Microsoft.VisualStudio.Component.VC.14.32.17.2.x86.x64', \
             '--add Microsoft.VisualStudio.Component.Windows10SDK.19041', \
-            \"--installPath $env:SystemDrive/BuildTools\", \
             '--quiet', '--wait', '--norestart', '--nocache'; \
     Remove-Item -Path 'vs_buildtools.exe', \"$env:TEMP/*\" -Recurse -Force;
 
@@ -102,6 +101,6 @@ RUN \
 ENV CCACHE_DIR='C:\.ccache' CCACHE_TEMPDIR='C:\ccache-tmp'
 
 ENTRYPOINT [ \
-    "C:/BuildTools/Common7/Tools/VsDevCmd.bat", "-host_arch=amd64", "-arch=amd64", \
-    "&&", "powershell.exe", "-NoLogo", "-ExecutionPolicy", "Bypass" \
+    "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/Tools/VsDevCmd.bat", "-host_arch=amd64", \
+    "-arch=amd64", "&&", "powershell.exe", "-NoLogo", "-ExecutionPolicy", "Bypass" \
 ]
