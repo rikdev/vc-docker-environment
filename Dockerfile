@@ -23,7 +23,7 @@ RUN \
 RUN \
     Write-Host 'Installing CMake...'; \
     Invoke-WebRequest \
-        -Uri 'https://github.com/Kitware/CMake/releases/download/v3.23.2/cmake-3.23.2-windows-x86_64.msi' \
+        -Uri 'https://github.com/Kitware/CMake/releases/download/v3.30.2/cmake-3.30.2-windows-x86_64.msi' \
         -OutFile 'cmake.msi'; \
     Start-Process -Wait -NoNewWindow \
         -FilePath 'msiexec' \
