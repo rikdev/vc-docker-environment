@@ -32,7 +32,7 @@ RUN \
 \
     Write-Host 'Installing Ninja...'; \
     Invoke-WebRequest \
-        -Uri 'https://github.com/ninja-build/ninja/releases/download/v1.11.0/ninja-win.zip' \
+        -Uri 'https://github.com/ninja-build/ninja/releases/download/v1.12.1/ninja-win.zip' \
         -OutFile 'ninja.zip'; \
     Expand-Archive -Path 'ninja.zip' -DestinationPath \"$env:ProgramFiles/Ninja\"; \
     Remove-Item -Path 'ninja.zip'; \
