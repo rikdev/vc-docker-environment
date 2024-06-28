@@ -66,7 +66,7 @@ RUN \
 \
     Write-Host 'Installing Rust...'; \
     Invoke-WebRequest \
-        -Uri 'https://static.rust-lang.org/rustup/archive/1.24.3/x86_64-pc-windows-msvc/rustup-init.exe' \
+        -Uri 'https://static.rust-lang.org/rustup/archive/1.27.1/x86_64-pc-windows-msvc/rustup-init.exe' \
         -OutFile 'rustup-init.exe'; \
     Start-Process -Wait -NoNewWindow \
         -FilePath 'rustup-init.exe' \
@@ -74,7 +74,7 @@ RUN \
             '-y', \
             '--profile minimal', \
             '--target i686-pc-windows-msvc x86_64-pc-windows-msvc', \
-            '--default-toolchain 1.61.0'; \
+            '--default-toolchain 1.79.0'; \
     Remove-Item -Path 'rustup-init.exe'; \
 \
     Write-Host 'Installing Python...'; \
