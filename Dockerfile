@@ -90,7 +90,7 @@ RUN \
     Write-Host 'Installing Conan...'; \
     Start-Process -Wait -NoNewWindow \
         -FilePath 'pip' \
-        -ArgumentList 'install --no-cache-dir conan==1.48.1'; \
+        -ArgumentList 'install --no-cache-dir conan==1.64.1'; \
     Start-Process -Wait -NoNewWindow \
         -FilePath 'conan' \
         -ArgumentList 'config init'; \
