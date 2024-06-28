@@ -43,7 +43,7 @@ RUN \
 \
     Write-Host 'Installing ccache...'; \
     Invoke-WebRequest \
-        -Uri 'https://github.com/ccache/ccache/releases/download/v4.6.1/ccache-4.6.1-windows-x86_64.zip' \
+        -Uri 'https://github.com/ccache/ccache/releases/download/v4.10.2/ccache-4.10.2-windows-x86_64.zip' \
         -OutFile 'ccache.zip'; \
     Expand-Archive -Path 'ccache.zip' -DestinationPath \"$env:ProgramFiles\"; \
     Move-Item -Path \"$env:ProgramFiles/ccache-*\" -Destination \"$env:ProgramFiles/ccache\"; \
