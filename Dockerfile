@@ -80,7 +80,7 @@ RUN \
 \
     Write-Host 'Installing Python...'; \
     Invoke-WebRequest \
-        -Uri 'https://www.python.org/ftp/python/3.12.5/python-3.12.5-amd64.exe' \
+        -Uri 'https://www.python.org/ftp/python/3.13.1/python-3.13.1-amd64.exe' \
         -OutFile 'python-installer.exe'; \
     Start-Process -Wait -NoNewWindow \
         -FilePath 'python-installer.exe' \
