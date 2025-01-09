@@ -10,7 +10,7 @@ RUN \
         -FilePath 'vs_buildtools.exe' \
         -ArgumentList \
             # https://docs.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-build-tools
-            '--add Microsoft.VisualStudio.Component.VC.14.41.17.11.x86.x64', \
+            '--add Microsoft.VisualStudio.Component.VC.14.42.17.12.x86.x64', \
             '--add Microsoft.VisualStudio.Component.Windows11SDK.22621', \
             '--quiet', '--wait', '--norestart', '--nocache'; \
     Remove-Item -Path 'vs_buildtools.exe', \"$env:TEMP/*\" -Recurse -Force; \
