@@ -55,7 +55,7 @@ RUN \
 \
     Write-Host 'Installing Git...'; \
     Invoke-WebRequest \
-        -Uri 'https://github.com/git-for-windows/git/releases/download/v2.46.0.windows.1/MinGit-2.46.0-64-bit.zip' \
+        -Uri 'https://github.com/git-for-windows/git/releases/download/v2.47.1.windows.1/MinGit-2.47.1-64-bit.zip' \
         -OutFile 'git.zip'; \
     Expand-Archive -Path 'git.zip' -DestinationPath \"$env:ProgramFiles/MinGit\"; \
     Remove-Item -Path 'git.zip'; \
