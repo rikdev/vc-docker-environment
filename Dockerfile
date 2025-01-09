@@ -59,6 +59,7 @@ RUN \
         -OutFile 'git.zip'; \
     Expand-Archive -Path 'git.zip' -DestinationPath \"$env:ProgramFiles/MinGit\"; \
     Remove-Item -Path 'git.zip'; \
+    Remove-Item -Path \"$env:ProgramFiles/MinGit/usr/bin/ssh*.exe\"; \
     [Environment]::SetEnvironmentVariable( \
         'Path', \
         [Environment]::GetEnvironmentVariable('Path', [EnvironmentVariableTarget]::Machine) + \";$env:ProgramFiles\MinGit\cmd\", \
