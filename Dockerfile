@@ -91,18 +91,9 @@ RUN \
     Write-Host 'Installing Conan...'; \
     Start-Process -Wait -NoNewWindow \
         -FilePath 'pip' \
-        -ArgumentList 'install --no-cache-dir conan==1.64.1'; \
-    Start-Process -Wait -NoNewWindow \
-        -FilePath 'conan' \
-        -ArgumentList 'config init'; \
-    Start-Process -Wait -NoNewWindow \
-        -FilePath 'conan' \
-        -ArgumentList \"config set general.user_home_short=$env:SystemDrive\.conan\"; \
-    Start-Process -Wait -NoNewWindow \
-        -FilePath 'conan' \
-        -ArgumentList \"config set storage.path=$env:SystemDrive\.conan\";
+        -ArgumentList 'install --no-cache-dir conan==2.11.0';
 
-ENV CCACHE_DIR='C:\.ccache' CCACHE_TEMPDIR='C:\ccache-tmp'
+ENV CCACHE_DIR='C:\.ccache' CCACHE_TEMPDIR='C:\ccache-tmp' CONAN_HOME='C:\.conan2'
 
 ENTRYPOINT [ \
     "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/Tools/VsDevCmd.bat", "-host_arch=amd64", \

@@ -26,8 +26,8 @@ docker run --rm -it -v "path_to_ccache_storage":"C:\.ccache" vc-docker-environme
 
 You can store the file `ccache.conf` with settings for ccache in this storage.
 
-If you use the Conan, you should mount the `C:\.conan` directory from the Docker container to a persistent storage:
+If you use the Conan, you should mount the `C:\.conan2` directory from the Docker container to a persistent storage:
 
 ```sh
-docker run --rm -it -v "path_to_conan_storage":"C:\.conan" vc-docker-environment
+docker run --rm -it -v "path_to_conan_storage":"C:\.conan2" vc-docker-environment
 ```
