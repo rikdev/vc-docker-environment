@@ -55,14 +55,21 @@ RUN \
 \
     Write-Host 'Installing Git...'; \
     Invoke-WebRequest \
-        -Uri 'https://github.com/git-for-windows/git/releases/download/v2.47.1.windows.1/MinGit-2.47.1-64-bit.zip' \
-        -OutFile 'git.zip'; \
-    Expand-Archive -Path 'git.zip' -DestinationPath \"$env:ProgramFiles/MinGit\"; \
-    Remove-Item -Path 'git.zip'; \
-    Remove-Item -Path \"$env:ProgramFiles/MinGit/usr/bin/ssh*.exe\"; \
+        -Uri 'https://github.com/git-for-windows/git/releases/download/v2.48.1.windows.1/Git-2.48.1-64-bit.tar.bz2' \
+        -OutFile 'git.tar.bz2'; \
+    New-Item -Path \"$env:ProgramFiles\" -Name 'Git' -ItemType 'directory'; \
+    Start-Process -Wait -NoNewWindow \
+        -FilePath 'tar' \
+        -ArgumentList \
+            '--extract', \
+            '--file=git.tar.bz2', \
+            \"--directory=`\"$env:ProgramFiles/Git`\"\"; \
+    Remove-Item -Path 'git.tar.bz2'; \
+    Remove-Item -Path \"$env:ProgramFiles/Git/usr/bin/ssh*.exe\"; \
+    Add-Content -Path \"$env:ProgramFiles/Git/etc/gitconfig\" -Value \"[safe]`n`tdirectory = *\"; \
     [Environment]::SetEnvironmentVariable( \
         'Path', \
-        [Environment]::GetEnvironmentVariable('Path', [EnvironmentVariableTarget]::Machine) + \";$env:ProgramFiles\MinGit\cmd\", \
+        [Environment]::GetEnvironmentVariable('Path', [EnvironmentVariableTarget]::Machine) + \";$env:ProgramFiles\Git\bin\", \
         [EnvironmentVariableTarget]::Machine); \
 \
     Write-Host 'Installing Rust...'; \
