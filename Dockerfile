@@ -99,7 +99,7 @@ RUN \
     Write-Host 'Installing Conan...'; \
     Start-Process -Wait -NoNewWindow \
         -FilePath 'pip' \
-        -ArgumentList 'install --no-cache-dir conan==2.11.0';
+        -ArgumentList 'install --no-cache-dir conan==2.12.2';
 
 ENV CCACHE_DIR='C:\.ccache' CCACHE_TEMPDIR='C:\ccache-tmp' CONAN_HOME='C:\.conan2'
 
