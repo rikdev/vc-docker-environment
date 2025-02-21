@@ -20,6 +20,12 @@ RUN \
         -ItemType SymbolicLink \
         -Value \"${env:ProgramFiles(x86)}/Microsoft Visual Studio/2022/BuildTools\"
 
+ENV CCACHE_DIR='C:\.ccache' \
+    CCACHE_TEMPDIR='C:\ccache-tmp' \
+    CONAN_HOME='C:\.conan2' \
+    CARGO_HOME='C:\.cargo' \
+    RUSTUP_HOME='C:\.rustup'
+
 # Updating utilities should't change the mtime of the VC
 RUN \
     Write-Host 'Installing CMake...'; \
@@ -100,8 +106,6 @@ RUN \
     Start-Process -Wait -NoNewWindow \
         -FilePath 'pip' \
         -ArgumentList 'install --no-cache-dir conan==2.12.2';
-
-ENV CCACHE_DIR='C:\.ccache' CCACHE_TEMPDIR='C:\ccache-tmp' CONAN_HOME='C:\.conan2'
 
 ENTRYPOINT [ \
     "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/Tools/VsDevCmd.bat", "-host_arch=amd64", \
