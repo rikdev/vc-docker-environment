@@ -83,7 +83,7 @@ RUN \
             '-y', \
             '--profile minimal', \
             '--target i686-pc-windows-msvc x86_64-pc-windows-msvc', \
-            '--default-toolchain 1.83.0'; \
+            '--default-toolchain 1.85.0'; \
     Remove-Item -Path 'rustup-init.exe'; \
 \
     Write-Host 'Installing Python...'; \
