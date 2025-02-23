@@ -1,11 +1,19 @@
 FROM mcr.microsoft.com/windows/servercore:ltsc2025
 
-SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
+SHELL ["powershell", "-Command", \
+    "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue'; \
+    function Download-File($Uri, $OutFile, $Hash) { \
+        Invoke-WebRequest -Uri $Uri -OutFile $OutFile; \
+        if ((Get-FileHash -Path $OutFile -Algorithm SHA256).Hash -ne $Hash) { \
+            Write-Error \\\"Invalid hash for file '$OutFile'\\\" \
+        }; \
+    };"]
 
 RUN \
-    Invoke-WebRequest \
+    Download-File \
         -Uri 'https://aka.ms/vs/17/release/vs_buildtools.exe' \
-        -OutFile 'vs_buildtools.exe'; \
+        -OutFile 'vs_buildtools.exe' \
+        -Hash 'efc5cbf61e84d9762ac34da1ebea1802389b77233e9883ea1889d75f3d8b7e61'; \
     Start-Process -Wait -NoNewWindow \
         -FilePath 'vs_buildtools.exe' \
         -ArgumentList \
@@ -29,18 +37,20 @@ ENV CCACHE_DIR='C:\.ccache' \
 # Updating utilities should't change the mtime of the VC
 RUN \
     Write-Host 'Installing CMake...'; \
-    Invoke-WebRequest \
+    Download-File \
         -Uri 'https://github.com/Kitware/CMake/releases/download/v3.31.5/cmake-3.31.5-windows-x86_64.msi' \
-        -OutFile 'cmake.msi'; \
+        -OutFile 'cmake.msi' \
+        -Hash '97e249f199b86c1fc56dbc5e80b1a9e1f912c34dfbf8e7933ba1944e3034455f'; \
     Start-Process -Wait -NoNewWindow \
         -FilePath 'msiexec' \
         -ArgumentList '/quiet /norestart /package cmake.msi ADD_CMAKE_TO_PATH=System'; \
     Remove-Item -Path 'cmake.msi'; \
 \
     Write-Host 'Installing Ninja...'; \
-    Invoke-WebRequest \
+    Download-File \
         -Uri 'https://github.com/ninja-build/ninja/releases/download/v1.12.1/ninja-win.zip' \
-        -OutFile 'ninja.zip'; \
+        -OutFile 'ninja.zip' \
+        -Hash 'f550fec705b6d6ff58f2db3c374c2277a37691678d6aba463adcbb129108467a'; \
     Expand-Archive -Path 'ninja.zip' -DestinationPath \"$env:ProgramFiles/Ninja\"; \
     Remove-Item -Path 'ninja.zip'; \
     [Environment]::SetEnvironmentVariable( \
@@ -49,9 +59,10 @@ RUN \
         [EnvironmentVariableTarget]::Machine); \
 \
     Write-Host 'Installing ccache...'; \
-    Invoke-WebRequest \
+    Download-File \
         -Uri 'https://github.com/ccache/ccache/releases/download/v4.10.2/ccache-4.10.2-windows-x86_64.zip' \
-        -OutFile 'ccache.zip'; \
+        -OutFile 'ccache.zip' \
+        -Hash '6252f081876a9a9f700fae13a5aec5d0d486b28261d7f1f72ac11c7ad9df4da9'; \
     Expand-Archive -Path 'ccache.zip' -DestinationPath \"$env:ProgramFiles\"; \
     Move-Item -Path \"$env:ProgramFiles/ccache-*\" -Destination \"$env:ProgramFiles/ccache\"; \
     Remove-Item -Path 'ccache.zip', \"$env:ProgramFiles/ccache/*\" -Exclude '*.exe' -Recurse -Force; \
@@ -61,9 +72,10 @@ RUN \
         [EnvironmentVariableTarget]::Machine); \
 \
     Write-Host 'Installing Git...'; \
-    Invoke-WebRequest \
+    Download-File \
         -Uri 'https://github.com/git-for-windows/git/releases/download/v2.48.1.windows.1/Git-2.48.1-64-bit.tar.bz2' \
-        -OutFile 'git.tar.bz2'; \
+        -OutFile 'git.tar.bz2' \
+        -Hash 'ec46b07acc431dcbe64ef5665582b934530b09b8f7ef3b39ad912832a3fefa6b'; \
     New-Item -Path \"$env:ProgramFiles\" -Name 'Git' -ItemType 'directory'; \
     Start-Process -Wait -NoNewWindow \
         -FilePath 'tar' \
@@ -80,9 +92,10 @@ RUN \
         [EnvironmentVariableTarget]::Machine); \
 \
     Write-Host 'Installing Rust...'; \
-    Invoke-WebRequest \
+    Download-File \
         -Uri 'https://static.rust-lang.org/rustup/archive/1.27.1/x86_64-pc-windows-msvc/rustup-init.exe' \
-        -OutFile 'rustup-init.exe'; \
+        -OutFile 'rustup-init.exe' \
+        -Hash '193d6c727e18734edbf7303180657e96e9d5a08432002b4e6c5bbe77c60cb3e8'; \
     Start-Process -Wait -NoNewWindow \
         -FilePath 'rustup-init.exe' \
         -ArgumentList \
@@ -93,9 +106,10 @@ RUN \
     Remove-Item -Path 'rustup-init.exe'; \
 \
     Write-Host 'Installing Python...'; \
-    Invoke-WebRequest \
+    Download-File \
         -Uri 'https://www.python.org/ftp/python/3.13.2/python-3.13.2-amd64.exe' \
-        -OutFile 'python-installer.exe'; \
+        -OutFile 'python-installer.exe' \
+        -Hash '9aaa1075d0bd3e8abd0623d2d05de692ff00780579e1b232f259028bac19bb51'; \
     Start-Process -Wait -NoNewWindow \
         -FilePath 'python-installer.exe' \
         -ArgumentList '/quiet InstallAllUsers=1 PrependPath=1 Shortcuts=0 Include_doc=0 Include_test=0'; \
